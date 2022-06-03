@@ -13,5 +13,9 @@ export type FilteredCollectionsWithUserId = {
   filteredCollection: FilteredCollections;
 };
 
+export type ApartmentForAddressObj = {
+  userId: string;
+  apartment: Token;
+};
 export const FETCH_NFT_DATA_SERVICE = 'FETCH_NFT_DATA_SERVICE';
 export const INTERNAL_API = 'INTERNAL_API';
