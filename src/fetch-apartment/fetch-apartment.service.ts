@@ -1,37 +1,31 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { OpenseaService } from 'src/opensea/opensea.service';
-import { GenericApiService } from 'src/generic-api/generic-api.service';
-import { IpfsService } from 'src/ipfs/ipfs.service';
-import { PinataService } from 'src/pinata/pinata.service';
 import { Token } from '@worldwidewebb/shared-messages/nfts';
 import { ApartmentForAddressObj } from 'src/app.constants';
-import { InternalApiService } from 'src/internal-api/internal-api.service';
 import { PermissionType } from 'src/models/apartments';
 import { ApartmentSummary } from '@worldwidewebb/shared-messages/apartments';
-import { WORLDWIDE_WEBB_APARTMENT_ADDRESS } from 'src/utils copy';
+import { WORLDWIDE_WEBB_APARTMENT_ADDRESS } from 'src/utils';
+import { InternalApiService } from 'src/internal-api/internal-api.service';
+import { OwnedApartment } from '@worldwidewebb/client-apartments';
 
 @Injectable()
 export class FetchApartmentService {
   private logger = new Logger(FetchApartmentService.name);
-  constructor(
-    private openSea: OpenseaService,
-    private genericApi: GenericApiService,
-    private ipfs: IpfsService,
-    private pinata: PinataService,
-    private internalApi: InternalApiService,
-  ) {
+  constructor(private openSea: OpenseaService, private internalApi: InternalApiService) {
     this.logger.verbose('Initializing 3rd party Apis...');
   }
 
   async handleFetchApartmentData(apartmentForAddressObj: ApartmentForAddressObj) {
     const { userId, apartment } = apartmentForAddressObj;
 
-    const apartmentSummary: ApartmentSummary = await this.getOwnedApartments(apartment);
+    const ownedApartment: OwnedApartment = await this.getOwnedApartments(userId, apartment);
     this.logger.verbose('fetch apartment data microservice');
-    console.log(apartmentSummary);
+    console.log(ownedApartment);
+
+    await this.internalApi.setOwnedApartment(ownedApartment);
   }
 
-  private async getOwnedApartments(apartment: Token): Promise<ApartmentSummary> {
+  private async getOwnedApartments(ownerId: string, apartment: Token): Promise<OwnedApartment> {
     let apartmentType = 'unknown';
     if (apartment.metadata) {
       const metadata = JSON.parse(apartment.metadata);
@@ -45,9 +39,9 @@ export class FetchApartmentService {
 
     return {
       id: apartment.id,
+      ownerId,
       apartmentType,
       thumbnailUri,
-      permission: PermissionType.MANAGE,
     };
   }
 }

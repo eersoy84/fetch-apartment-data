@@ -1,18 +1,25 @@
 import { NestFactory } from '@nestjs/core';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
+import KafkaCustomTransporter from './kafka-custom-transporter';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
-    transport: Transport.KAFKA,
-    options: {
+  const app = await NestFactory.createMicroservice(AppModule, {
+    strategy: new KafkaCustomTransporter({
+      subscribe: {
+        fromBeginning: true,
+      },
       client: {
+        clientId: 'apartmentDataRequest',
         brokers: [process.env.KAFKA_BROKER_URL],
       },
       consumer: {
-        groupId: 'apartment_data_request_consumer',
+        groupId: 'apartmentDataRequest-consumer',
+        allowAutoTopicCreation: false,
       },
-    },
+      run: {
+        autoCommit: false,
+      },
+    }),
   });
   await app.listen();
 }

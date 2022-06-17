@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { AvatarMetadata, InternalApi } from '@worldwidewebb/client-nfts';
+import { InternalApi, OwnedApartment } from '@worldwidewebb/client-apartments';
 import { INTERNAL_API } from 'src/app.constants';
 
 @Injectable()
@@ -9,13 +9,16 @@ export class InternalApiService {
   constructor(@Inject(INTERNAL_API) private readonly internalApi: InternalApi) {
     this.logger.verbose('internal api initializing...');
   }
-  async setUserOwnedAvatar(userId: string, avatarMetadata: AvatarMetadata) {
+  async setOwnedApartment(ownedApartment: OwnedApartment) {
     try {
-      console.log(avatarMetadata);
-      this.logger.verbose('Saving avatar metadata to database');
-      await this.internalApi.setUserOwnedAvatar(userId, avatarMetadata);
+      console.log(ownedApartment);
+      this.logger.verbose('Saving owned apartment to database');
+      await this.internalApi.setOwnedApartment(ownedApartment.id, ownedApartment);
     } catch (err) {
-      this.logger.error(`While saving  Avatar MetaData ${avatarMetadata} with ${userId} to Database`, err);
+      this.logger.error(
+        `While saving  Owned Apartment ${ownedApartment} with ${ownedApartment.ownerId} to Database`,
+        err,
+      );
     }
   }
 }

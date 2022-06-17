@@ -1339,18 +1339,18 @@
     "@webassemblyjs/ast" "1.11.1"
     "@xtuc/long" "4.2.2"
 
-"@worldwidewebb/client-auth@^2.10.1":
-  version "2.10.1"
-  resolved "https://gitlab.com/api/v4/projects/33054013/packages/npm/@worldwidewebb/client-auth/-/@worldwidewebb/client-auth-2.10.1.tgz#0c9e9548f46513cb834dc8a6ed59d53b46c7d83a"
-  integrity sha1-DJ6VSPRlE8uDTcim7VnVO0bH2Do=
+"@worldwidewebb/client-apartments@^2.2.1":
+  version "2.2.1"
+  resolved "https://gitlab.com/api/v4/projects/33054013/packages/npm/@worldwidewebb/client-apartments/-/@worldwidewebb/client-apartments-2.2.1.tgz#fc2887700627a9da650f343933f6230c373cee8c"
+  integrity sha1-/CiHcAYnqdplDzQ5M/YjDDc87ow=
   dependencies:
     axios "^0.25.0"
     url "^0.11.0"
 
-"@worldwidewebb/client-nfts@^2.2.0":
-  version "2.2.0"
-  resolved "https://gitlab.com/api/v4/projects/33054013/packages/npm/@worldwidewebb/client-nfts/-/@worldwidewebb/client-nfts-2.2.0.tgz#abca97f370c8235b22d3061dc1e9b0723732e388"
-  integrity sha1-q8qX83DII1si0wYdwemwcjcy44g=
+"@worldwidewebb/client-auth@^2.10.1":
+  version "2.10.1"
+  resolved "https://gitlab.com/api/v4/projects/33054013/packages/npm/@worldwidewebb/client-auth/-/@worldwidewebb/client-auth-2.10.1.tgz#0c9e9548f46513cb834dc8a6ed59d53b46c7d83a"
+  integrity sha1-DJ6VSPRlE8uDTcim7VnVO0bH2Do=
   dependencies:
     axios "^0.25.0"
     url "^0.11.0"
